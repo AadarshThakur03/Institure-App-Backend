@@ -1,0 +1,122 @@
+In modern JavaScript (ES6/ES2015 and beyond) using ECMAScript modules (ESM), you can perform both default and named exports. Here’s how you can use them effectively in your code.
+
+### 1. **Default Export**
+
+A default export allows you to export a single value or entity from a module. When importing, you don't need to use the exact name of the exported entity.
+
+#### Example:
+
+**Exporting (default export):**
+
+```javascript
+// utils.js
+const sayHello = (name) => {
+    return `Hello, ${name}!`;
+};
+
+export default sayHello;
+```
+
+**Importing (default import):**
+
+```javascript
+// index.js
+import sayHello from './utils.js'; // You can name it anything during import
+
+console.log(sayHello('Alice')); // Output: Hello, Alice!
+```
+
+In the above example, `sayHello` is exported as the default export from `utils.js`. When importing in `index.js`, it can be given any name (`sayHello` in this case).
+
+### 2. **Named Export**
+
+Named exports allow you to export multiple values or entities from a module. When importing, you must use the exact names of the exported entities.
+
+#### Example:
+
+**Exporting (named export):**
+
+```javascript
+// mathUtils.js
+export const add = (a, b) => a + b;
+
+export const subtract = (a, b) => a - b;
+
+export const multiply = (a, b) => a * b;
+```
+
+**Importing (named import):**
+
+```javascript
+// index.js
+import { add, subtract } from './mathUtils.js'; // You must use the exact names
+
+console.log(add(5, 3));       // Output: 8
+console.log(subtract(5, 3));  // Output: 2
+```
+
+In the above example, `add`, `subtract`, and `multiply` are exported as named exports from `mathUtils.js`. When importing, you must refer to them by their exact names.
+
+### 3. **Combining Default and Named Exports**
+
+You can have both a default export and named exports in the same module.
+
+#### Example:
+
+**Exporting (default and named exports):**
+
+```javascript
+// utilities.js
+const sayGoodbye = (name) => {
+    return `Goodbye, ${name}!`;
+};
+
+const greetMorning = (name) => {
+    return `Good morning, ${name}!`;
+};
+
+const greetEvening = (name) => {
+    return `Good evening, ${name}!`;
+};
+
+export default sayGoodbye;
+export { greetMorning, greetEvening };
+```
+
+**Importing (default and named imports):**
+
+```javascript
+// index.js
+import sayGoodbye, { greetMorning, greetEvening } from './utilities.js';
+
+console.log(sayGoodbye('Alice'));        // Output: Goodbye, Alice!
+console.log(greetMorning('Alice'));      // Output: Good morning, Alice!
+console.log(greetEvening('Alice'));      // Output: Good evening, Alice!
+```
+
+In this example, `sayGoodbye` is the default export, while `greetMorning` and `greetEvening` are named exports. When importing, you can import the default export and the named exports together.
+
+### 4. **Renaming Imports**
+
+You can also rename named imports if you want to avoid naming conflicts or prefer a different name in the importing module.
+
+#### Example:
+
+```javascript
+// index.js
+import { greetMorning as morningGreeting, greetEvening as eveningGreeting } from './utilities.js';
+
+console.log(morningGreeting('Alice'));  // Output: Good morning, Alice!
+console.log(eveningGreeting('Alice'));  // Output: Good evening, Alice!
+```
+
+In this example, `greetMorning` is imported as `morningGreeting`, and `greetEvening` as `eveningGreeting`.
+
+### Summary
+
+- **Default Exports**: Used when you want to export a single entity from a module. Imported without curly braces and can be named anything.
+- **Named Exports**: Used when you want to export multiple entities from a module. Imported with curly braces and must use the exact name unless renamed during import.
+- **Combining Both**: You can have both default and named exports in the same module for flexibility.
+- **Renaming Imports**: Useful for avoiding naming conflicts or making the code more readable.
+
+This structure helps in organizing your code effectively, especially in large-scale applications where modularization is key.

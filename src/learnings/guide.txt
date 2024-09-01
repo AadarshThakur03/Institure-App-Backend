@@ -1,0 +1,95 @@
+# Node JS client library : https://redis.io/docs/latest/develop/connect/clients/nodejs/
+
+To install Redis on WSL (Windows Subsystem for Linux) and configure it so that it doesn't start automatically at boot time, you can follow these steps. This approach gives you control over when Redis starts, ensuring it only runs when you explicitly start it.
+
+### Step 1: Install WSL and Ubuntu
+
+If you haven't already installed WSL, you can follow these steps:
+
+1. **Enable WSL**:
+   - Open PowerShell as an Administrator and run:
+     ```bash
+     wsl --install
+     ```
+   - This command installs WSL and sets up Ubuntu as the default Linux distribution.
+
+2. **Restart Your Computer**:
+   - After installation, restart your computer to complete the WSL setup.
+
+3. **Launch WSL**:
+   - Open the Start menu, search for "Ubuntu" (or your chosen Linux distribution), and launch the terminal.
+
+### Step 2: Update Your Linux Distribution
+
+1. **Update Package Lists**:
+   - Run the following commands in your WSL terminal to ensure your package lists are up to date:
+     ```bash
+     sudo apt-get update
+     sudo apt-get upgrade
+     ```
+
+### Step 3: Install Redis
+
+1. **Install Redis**:
+   - Install Redis using the following command:
+     ```bash
+     sudo apt-get install redis-server
+     ```
+
+2. **Verify Installation**:
+   - After installation, check that Redis is installed correctly by checking its version:
+     ```bash
+     redis-server --version
+     ```
+
+### Step 4: Prevent Redis from Starting Automatically
+
+1. **Disable Redis Auto-Start**:
+   - By default, Redis is configured to start automatically when your system boots up. To disable this, run the following command:
+     ```bash
+     sudo systemctl disable redis-server
+     ```
+   - This command disables the automatic startup of the Redis service.
+
+2. **Check Service Status**:
+   - To confirm that Redis is not set to start automatically, you can check its status:
+     ```bash
+     sudo systemctl is-enabled redis-server
+     ```
+   - The output should say `disabled`.
+
+### Step 5: Manually Start and Stop Redis
+
+You can now manually start and stop Redis whenever you need it.
+
+1. **Start Redis Manually**:
+   - When you want to start Redis, run:
+     ```bash
+     sudo service redis-server start
+     ```
+
+2. **Stop Redis Manually**:
+   - To stop Redis, use:
+     ```bash
+     sudo service redis-server stop
+     ```
+
+3. **Check Redis Status**:
+   - You can check whether Redis is running with:
+     ```bash
+     sudo service redis-server status
+     ```
+
+4. **Use Redis CLI**:
+   - After starting Redis, you can interact with it using the Redis CLI:
+     ```bash
+     redis-cli
+     ```
+   - From here, you can run commands like `ping` to check the connection.
+
+### Step 6: Using Redis in Your Development Environment
+
+Once Redis is started, you can connect to it from your applications just like you would with any Redis server running on `localhost` with the default port `6379`.
+
+### Summary
+`
