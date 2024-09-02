@@ -17,7 +17,7 @@ class Database {
                 host: dbConfig.host,
                 user: dbConfig.user,
                 password: dbConfig.password,
-                database: dbConfig.database // Initially put a comment over this line
+                database: dbConfig.database // Comment out if using database setup later
             });
 
             this.connection.connect((err) => {
@@ -31,9 +31,9 @@ class Database {
         return this.connection;
     }
 
-    query(sql) {
+    query(sql, params) {
         return new Promise((resolve, reject) => {
-            this.connection.query(sql, (err, results) => {
+            this.connection.query(sql, params, (err, results) => {
                 if (err) {
                     return reject(err);
                 }
@@ -55,5 +55,5 @@ class Database {
 }
 
 const dbInstance = new Database();
-// Object.freeze(dbInstance);
+dbInstance.initConnection(); // Ensure the connection is initialized
 export default dbInstance;

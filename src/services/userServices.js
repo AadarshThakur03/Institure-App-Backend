@@ -26,11 +26,12 @@ class UserServices {
         };
       }
       
-      const [existingUsers] = await this.db.query(
-        "SELECT * FROM Administrator WHERE email = '?'",
+      const existingUsers = await this.db.query(
+        "SELECT * FROM Administrator WHERE email = ?",
         [email]
       );
-
+      console.log(existingUsers,'ex');
+      
       if (existingUsers?.length > 0) {
         return { message: "Email is already registered", status: "error" };
       }

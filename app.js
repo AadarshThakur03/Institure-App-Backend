@@ -3,18 +3,15 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import routes from "./src/routes/index.js";
 import dbInstance from "./src/services/database.js";
-
+import Migration from "./src/scripts/migration.js";
 
 dotenv.config();
-
 
 const app = express();
 
 const port = process.env.PORT || 3000;
 
-
 dbInstance.initConnection();
-
 
 app.use(express.static("uploads"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,7 +19,6 @@ app.use(bodyParser.json()); // req.body
 
 // console.log(routes);
 app.use("/", routes);
-
 
 // Global Error Handling Middleware
 app.use((req, res, next) => {
@@ -41,7 +37,20 @@ app.use((req, res) => {
   });
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
+async function runMigrations() {
+  const migration = new Migration(dbInstance);
+  try {
+    await migration.createDatabaseAndTables();
+    console.log("All migrations completed successfully.");
+  } catch (error) {
+    console.error("Migration failed:", error);
+  }
+}
+
+// Automatically run migrations once when the server starts
+runMigrations().then(() => {
+  app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}/`);
+  });
 });
+
